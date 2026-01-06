@@ -120,3 +120,7 @@ STATIC_URL = "static/"
 # Using custom user model
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# Login redirect url
+
+LOGIN_REDIRECT_URL = "home"

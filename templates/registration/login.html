@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Login
+{% endblock title %}
+
+{% block content %}
+  <h1>
+    Login
+  </h1>
+  <form action="" method="post"> {% csrf_token %}
+    {{ form }}
+    <button type="submit">
+      Login
+    </button>
+  </form>
+  <h4>
+    <a href="{% url 'home' %}">
+      Go back to home
+    </a>
+  </h4>
+{% endblock content %}
