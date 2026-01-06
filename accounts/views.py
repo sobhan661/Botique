@@ -1,4 +1,4 @@
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
@@ -34,6 +34,20 @@ class ProfileView(LoginRequiredMixin, DetailView):
     model = CustomUser
     context_object_name = "user"
     template_name = "profile.html"
+
+    def get_object(self):
+        return self.request.user
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    fields = [
+        "first_name",
+        "last_name",
+        "email",
+    ]
+    success_url = reverse_lazy("profile")
+    template_name = "profile_update.html"
 
     def get_object(self):
         return self.request.user
