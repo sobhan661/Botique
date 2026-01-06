@@ -19,6 +19,13 @@ Home
         </button>
       </form>
     </h2>
+    <h2>
+      <button>
+        <a href="{% url 'profile' user.pk %}">
+          Profile
+        </a>
+      </button>
+    </h2>
     {% else %}
       <h2>
         <a href="{% url 'signup' %}">

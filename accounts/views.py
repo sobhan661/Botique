@@ -1,9 +1,12 @@
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
 
 from .models import CustomUser
 from .forms import CustomUserCreationForm
+
+# Authentication Views
 
 
 class SignUpView(CreateView):
@@ -21,3 +24,12 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy("home")
+
+
+# ProfileViews
+
+
+class ProfileView(DetailView):
+    model = CustomUser
+    context_object_name = "user"
+    template_name = "profile.html"
