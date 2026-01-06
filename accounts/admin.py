@@ -55,6 +55,12 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
 
+    readonly_fields = (
+        "last_login",
+        "created_at",
+        "phone_number",
+    )
+
     add_fieldsets = (
         (
             None,
