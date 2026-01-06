@@ -2,6 +2,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import CustomUser
 from .forms import CustomUserCreationForm
@@ -26,10 +27,13 @@ class CustomLogoutView(LogoutView):
     next_page = reverse_lazy("home")
 
 
-# ProfileViews
+# Profile Views
 
 
-class ProfileView(DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
     model = CustomUser
     context_object_name = "user"
     template_name = "profile.html"
+
+    def get_object(self):
+        return self.request.user
