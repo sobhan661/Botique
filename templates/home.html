@@ -8,14 +8,25 @@ Home
   <h1>
     Home
   </h1>
-  <h2>
-    <a href="{% url 'signup' %}">
-      SignUp
-    </a>
-  </h2>
-  <h2>
-    <a href="{% url 'login' %}">
-      Login
-    </a>
-  </h2>
+  {% if user.is_authenticated %}
+    <p>
+      Hello, {{ user.first_name }}
+    </p>
+    <h2>
+      <a href="">
+        LogOut
+      </a>
+    </h2>
+    {% else %}
+      <h2>
+        <a href="{% url 'signup' %}">
+          SignUp
+        </a>
+      </h2>
+      <h2>
+        <a href="{% url 'login' %}">
+          Login
+        </a>
+      </h2>
+      {% endif %}
 {% endblock content %}
