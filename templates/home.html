@@ -13,9 +13,11 @@ Home
       Hello, {{ user.first_name }}
     </p>
     <h2>
-      <a href="">
-        LogOut
-      </a>
+      <form action="{% url 'logout' %}" method="post"> {% csrf_token %}
+        <button type="submit">
+          LogOut
+        </button>
+      </form>
     </h2>
     {% else %}
       <h2>
