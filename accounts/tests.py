@@ -127,7 +127,47 @@ class SignUpPageViewTests(TestCase):
                 "password2": "testpass123",
             },
         )
+
         self.assertEqual(response.status_code, 302)
+        self.assertEqual(get_user_model().objects.all().count(), 1)
+        self.assertEqual(
+            get_user_model().objects.all()[0].phone_number, "+989123456789"
+        )
+        self.assertEqual(get_user_model().objects.all()[0].first_name, "testname")
+        self.assertEqual(get_user_model().objects.all()[0].last_name, "testlastname")
+        self.assertEqual(get_user_model().objects.all()[0].email, "testmail@email.com")
+
+
+class LoginPageViewTests(TestCase):
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get("/login")
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_view_name(self):
+        response = self.client.get(reverse("login"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/login.html")
+
+    def setUp(self):
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            phone_number="+989123456789",
+            first_name="testname",
+            last_name="testlastname",
+            password="testpass123",
+            email="testmail@email.com",
+        )
+
+    def test_login_form(self):
+        response = self.client.post(
+            reverse("login"),
+            {
+                "phone_number": "+989123456789",
+                "password": "testpass123",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertEqual(
             get_user_model().objects.all()[0].phone_number, "+989123456789"
