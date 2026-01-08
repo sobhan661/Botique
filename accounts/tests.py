@@ -175,3 +175,33 @@ class LoginPageViewTests(TestCase):
         self.assertEqual(get_user_model().objects.all()[0].first_name, "testname")
         self.assertEqual(get_user_model().objects.all()[0].last_name, "testlastname")
         self.assertEqual(get_user_model().objects.all()[0].email, "testmail@email.com")
+
+
+class LogoutPageViewTests(TestCase):
+    def setUp(self):
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            phone_number="+989123456789",
+            first_name="testname",
+            last_name="testlastname",
+            password="testpass123",
+            email="testmail@email.com",
+        )
+
+        self.client.post(
+            reverse("login"),
+            {
+                "phone_number": "+989123456789",
+                "password": "testpass123",
+            },
+        )
+
+    def test_url_exists_at_correct_location(self):
+        response = self.client.post("/logout")
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_is_logged_out(self):
+        self.client.post(reverse("logout"))
+        response = self.client.get(reverse("profile"))
+        self.assertEqual(response.status_code, 302)
