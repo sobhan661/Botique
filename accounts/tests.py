@@ -205,3 +205,18 @@ class LogoutPageViewTests(TestCase):
         self.client.post(reverse("logout"))
         response = self.client.get(reverse("profile"))
         self.assertEqual(response.status_code, 302)
+
+
+class ProfileViewTests(TestCase):
+
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get("/profile")
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_profile_view_name(self):
+
+        response = self.client.get(reverse("profile"))
+
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed(response, "profile.html")
