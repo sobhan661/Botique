@@ -5,42 +5,27 @@ Home
 {% endblock title %}
 
 {% block content %}
-  <h1>
-    Home
-  </h1>
-  {% if user.is_authenticated %}
-    <p>
-      Hello, {{ user.first_name }}
-    </p>
-    <h2>
-      <form action="{% url 'logout' %}" method="post"> {% csrf_token %}
-        <button class="btn btn-success" type="submit">
-          LogOut
-        </button>
-      </form>
-    </h2>
-    <h2>
-      <button>
-        <a href="{% url 'profile' %}">
-          Profile
-        </a>
-      </button>
-    </h2>
-    {% else %}
-      <h2>
-        <a href="{% url 'signup' %}">
-          SignUp
-        </a>
-      </h2>
-      <h2>
-        <a href="{% url 'login' %}">
-          Login
-        </a>
-      </h2>
-      {% endif %}
-      <h2>
-        <a href="{% url 'items' %}">
-          Items Available
-        </a>
-      </h2>
+  <div class="container">
+    <div class="container col-xxl-8 px-4 py-5">
+       <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+         <div class="col-10 col-sm-8 col-lg-6">
+           <img src="https://www.pexels.com/photo/young-man-in-stylish-casual-outfit-outdoors-28945175/" class="d-block mx-lg-auto img-fluid" alt="random pic" width="700" height="500" loading="lazy">
+          </div> 
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-light lh-1 mb-3">
+              Earn The Eyes, Earn The Bodies
+            </h1>
+            <p class="lead text-light">
+              In a world where people are lost into themselvs, Shine into thier eyes like a rock star and take thier attention even for a split second, we don't just sell clothes, we sell what have been for a long time exclusive to royalty.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <a href="{% url 'items' %}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">
+                Realeza
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
