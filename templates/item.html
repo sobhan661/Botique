@@ -5,15 +5,74 @@
 {% endblock title %}
 
 {% block content %}
-  <h1>
-    {{ item.name|title }}
-  </h1>
-  <h2>
-    {{ item.price_toman }}
-  </h2>
-  <h4>
-    <a href="{% url 'items' %}">
-      Go back to items
-    </a>
-  </h4>
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card bg-dark text-light shadow-lg" style="max-width: 700px; width: 100%;">
+
+    {% if item.item_img %}
+    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 350px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+    {% endif %}
+
+    <div class="card-header text-center bg-secondary">
+      <h2 class="mb-0">{{ item.name|title }}</h2>
+      <small class="text-light">{{ item.get_category_display }}</small>
+    </div>
+
+    <div class="card-body">
+      <h3 class="text-primary mb-3">{{ item.price_toman }} تومان</h3>
+
+      {% if item.description %}
+      <p class="mb-4 text-light" style="white-space: pre-line;">{{ item.description }}</p>
+      {% endif %}
+
+      {% if item.is_active %}
+        <span class="badge bg-success mb-3">Available</span>
+      {% else %}
+        <span class="badge bg-danger mb-3">Unavailable</span>
+      {% endif %}
+
+      {% if item.variants.all %}
+      <h5 class="text-light mb-2">Variants:</h5>
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        {% for variant in item.variants.all %}
+          <span class="badge bg-info text-dark">
+            {{ variant.get_size_display }} - Stock: {{ variant.stock }}
+          </span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="d-flex justify-content-center">
+        <a href="{% url 'items' %}" class="btn btn-outline-light shadow-sm hover-scale me-2">Back to Items</a>
+        <a href="#" class="btn btn-primary shadow-sm hover-scale">Buy Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.hover-scale:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5em 0.75em;
+}
+</style>
 {% endblock content %}

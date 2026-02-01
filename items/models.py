@@ -25,6 +25,10 @@ class Item(models.Model):
         help_text="Price is in toman",
     )
 
+    item_img = models.ImageField(
+        "Item Image", upload_to="media/", blank=False, null=False
+    )
+
     description = models.TextField("Description", blank=True)
 
     created_at = models.DateTimeField("Creation Date", auto_now_add=True)
