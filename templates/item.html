@@ -6,22 +6,19 @@
 
 {% block content %}
 <div class="container my-5 d-flex justify-content-center">
-  <div class="card bg-dark text-light shadow-lg" style="max-width: 700px; width: 100%;">
-
+  <div class="card bg-dark text-light shadow-lg" style="max-width: 800px; width: 100%;">
     {% if item.item_img %}
-    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 350px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 400px; object-fit: cover;">
     {% endif %}
 
-    <div class="card-header text-center bg-secondary">
-      <h2 class="mb-0">{{ item.name|title }}</h2>
-      <small class="text-light">{{ item.get_category_display }}</small>
-    </div>
-
     <div class="card-body">
-      <h3 class="text-primary mb-3">{{ item.price_toman }} تومان</h3>
+      <h2 class="card-title">{{ item.name|title }}</h2>
+      <small class="text-muted">{{ item.get_category_display }}</small>
+
+      <h3 class="text-primary mt-2 mb-3">{{ item.price_toman }} تومان</h3>
 
       {% if item.description %}
-      <p class="mb-4 text-light" style="white-space: pre-line;">{{ item.description }}</p>
+      <p class="text-light mb-4" style="white-space: pre-line;">{{ item.description }}</p>
       {% endif %}
 
       {% if item.is_active %}
@@ -41,23 +38,40 @@
       </div>
       {% endif %}
 
-      <div class="d-flex justify-content-center">
-        <a href="{% url 'items' %}" class="btn btn-outline-light shadow-sm hover-scale me-2">Back to Items</a>
-        <a href="#" class="btn btn-primary shadow-sm hover-scale">Buy Now</a>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'items' %}" class="btn btn-outline-light shadow-sm hover-scale">Back to Items</a>
+        <a href="#" class="btn btn-primary shadow-sm hover-scale">Add to Cart</a>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-.hover-scale:hover {
-    transform: scale(1.05);
-    transition: 0.3s;
+body {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 }
 
 .card {
     border-radius: 15px;
     overflow: hidden;
+}
+
+.card-img-top {
+    transition: transform 0.3s;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.03);
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5em 0.75em;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 
 .btn-primary {
@@ -68,11 +82,6 @@
 .btn-primary:hover {
     background-color: #0b5ed7;
     border-color: #0a58ca;
-}
-
-.badge {
-    font-size: 0.9rem;
-    padding: 0.5em 0.75em;
 }
 </style>
 {% endblock content %}

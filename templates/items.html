@@ -14,26 +14,30 @@
 
   <div class="row g-4">
     {% for item in items %}
-    <div class="col-md-6 col-lg-4">
-      <div class="card bg-dark text-light shadow-sm hover-scale h-100">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="product-card shadow-sm h-100">
+
         {% if item.item_img %}
-        <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 220px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+        <div class="position-relative overflow-hidden">
+          <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}">
+          <div class="overlay d-flex justify-content-center align-items-center">
+            <a href="{% url 'item' item.pk %}" class="btn btn-primary me-2">Quick View</a>
+            <a href="#" class="btn btn-outline-light">Add to Cart</a>
+          </div>
+        </div>
         {% endif %}
 
-        <div class="card-body d-flex flex-column justify-content-between">
-          <h5 class="card-title">{{ item.name|title }}</h5>
+        <div class="card-body" style="padding: 1rem;">
+          <h5 class="card-title text-light mb-2">{{ item.name|title }}</h5>
           <p class="card-text mb-1">
             <span class="badge bg-info text-dark">{{ item.get_category_display }}</span>
           </p>
           <p class="card-text text-primary mb-2">{{ item.price_toman }} تومان</p>
-
           {% if item.is_active %}
-            <span class="badge bg-success mb-2">Available</span>
+            <span class="badge bg-success">Available</span>
           {% else %}
-            <span class="badge bg-danger mb-2">Unavailable</span>
+            <span class="badge bg-danger">Unavailable</span>
           {% endif %}
-
-          <a href="{% url 'item' item.pk %}" class="btn btn-primary mt-2 shadow-sm">View Details</a>
         </div>
       </div>
     </div>
@@ -44,19 +48,69 @@
 </div>
 
 <style>
-.hover-scale:hover {
-    transform: scale(1.03);
-    transition: 0.3s;
+body {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 }
 
-.card {
-    border-radius: 12px;
+/* Card background and hover */
+.product-card {
+    background-color: #1f1f1f !important;
+    border-radius: 15px;
     overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card-body h5 {
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* Card image */
+.product-card img {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Overlay buttons */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.product-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay .btn {
+    margin: 0 5px;
+}
+
+/* Card text */
+.card-title {
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    color: #ffffff; /* FORCE white text */
+}
+
+.card-text {
+    color: #ffffff; /* FORCE white text */
+}
+
+.badge {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
 }
 
 .btn-primary {
@@ -69,8 +123,9 @@
     border-color: #0a58ca;
 }
 
-.badge {
-    font-size: 0.85rem;
+.hover-scale:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
 }
 </style>
 {% endblock content %}
