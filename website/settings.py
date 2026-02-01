@@ -121,6 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_DIRS = [BASE_DIR / "static"]
 
 # Using custom user model
 
@@ -134,5 +135,5 @@ LOGOUT_REDIRECT_URL = "login"
 
 LOGIN_URL = "login"
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # new
-CRISPY_TEMPLATE_PACK = "bootstrap5"  # new
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
