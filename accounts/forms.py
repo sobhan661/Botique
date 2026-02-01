@@ -22,3 +22,12 @@ class CustomUserChangeForm(UserChangeForm):
             "last_name",
             "email",
         )
+
+
+class CustomSignUpForm(CustomUserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Removing Help Text Python Level
+        for field in self.fields.values():
+            field.help_text = ""

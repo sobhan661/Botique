@@ -5,14 +5,14 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import CustomUser
-from .forms import CustomUserCreationForm
+from .forms import CustomSignUpForm
 
 # Authentication Views
 
 
 class SignUpView(CreateView):
     model = CustomUser
-    form_class = CustomUserCreationForm
+    form_class = CustomSignUpForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 
