@@ -49,14 +49,22 @@
               {% if user.is_authenticated %}
                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                <li>
+                  <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button 
+                      type="submit" 
+                      class="dropdown-item d-block w-100 text-start">
+                      Logout
+                    </button>
+                  </form>
+                </li>
               {% else %}
                 <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                 <li><a class="dropdown-item" href="{% url 'signup' %}">SignUp</a></li>
               {% endif %}
             </ul>
           </li>
-
         </ul>
       </div>
     </div>
