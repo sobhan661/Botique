@@ -1,6 +1,7 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from .models import CustomUser
+from .models import CustomUser, Address
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -31,3 +32,21 @@ class CustomSignUpForm(CustomUserCreationForm):
         # Removing Help Text Python Level
         for field in self.fields.values():
             field.help_text = ""
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = (
+            "street_address",
+            "city",
+            "state",
+            "postal_code",
+            "country",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
