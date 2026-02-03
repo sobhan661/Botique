@@ -5,10 +5,16 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, Address
 
 
+class AddressInline(admin.TabularInline):
+    model = Address
+    extra = 0
+
+
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
+    inlines = [AddressInline]
 
     list_display = [
         "get_full_name",
@@ -80,4 +86,3 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Address)
