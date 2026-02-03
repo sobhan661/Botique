@@ -22,7 +22,10 @@
           <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.name }}">
           <div class="overlay d-flex justify-content-center align-items-center">
             <a href="{% url 'item' item.pk %}" class="btn btn-primary me-2">Quick View</a>
-            <a href="#" class="btn btn-outline-light">Add to Cart</a>
+            <form method="post" action="{% url 'add_to_cart' item.pk %}" class="d-inline-block">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-light">Add to Cart</button>
+            </form>
           </div>
         </div>
         {% endif %}

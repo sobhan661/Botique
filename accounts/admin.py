@@ -2,13 +2,19 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Address
+
+
+class AddressInline(admin.TabularInline):
+    model = Address
+    extra = 0
 
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
+    inlines = [AddressInline]
 
     list_display = [
         "get_full_name",

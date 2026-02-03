@@ -59,3 +59,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Address(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="address",
+    )
+    street_address = models.CharField("Street Address", max_length=255)
+    city = models.CharField("City", max_length=100)
+    state = models.CharField("State", max_length=100)
+    postal_code = models.CharField("Postal Code", max_length=20)
+    country = models.CharField("Country", max_length=100, default="Iran")
+    updated_at = models.DateTimeField("Updated At", auto_now=True)
+    created_at = models.DateTimeField("Created At", auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} - {self.city}"

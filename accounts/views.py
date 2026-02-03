@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import CustomUser
-from .forms import CustomSignUpForm
+from .models import CustomUser, Address
+from .forms import CustomSignUpForm, AddressForm
 
 # Authentication Views
 
@@ -51,3 +51,39 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        address = Address.objects.filter(user=self.request.user).first()
+        context["address_form"] = kwargs.get(
+            "address_form",
+            AddressForm(instance=address, prefix="address"),
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        address = Address.objects.filter(user=request.user).first()
+        address_form = AddressForm(
+            request.POST,
+            instance=address,
+            prefix="address",
+        )
+
+        if form.is_valid() and address_form.is_valid():
+            return self.forms_valid(form, address_form)
+
+        return self.forms_invalid(form, address_form)
+
+    def forms_valid(self, form, address_form):
+        response = super().form_valid(form)
+        address = address_form.save(commit=False)
+        address.user = self.request.user
+        address.save()
+        return response
+
+    def forms_invalid(self, form, address_form):
+        return self.render_to_response(
+            self.get_context_data(form=form, address_form=address_form)
+        )
